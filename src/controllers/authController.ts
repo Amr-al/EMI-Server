@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
-import { correctPassword, generateToken } from "../utils/helpers";
+import { correctPassword, generateToken, hashPassword } from "../utils/helpers";
 
 export const signIn = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -14,8 +14,9 @@ export const signIn = catchAsync(
     }
 
     const user = await User.findOne({ name }).select("+password");
+    console.log(user);
     if (!user) {
-      return next(new AppError("مستخدم غير موجود", 400));
+      return next(new AppError("الرقم السري او الاسم غير صحيح", 400));
     }
 
     // check if the entered password is correct
@@ -24,7 +25,7 @@ export const signIn = catchAsync(
       user?.password || ""
     );
     if (!correct) {
-      return next(new AppError("الرقم السري غير صحيح", 401));
+      return next(new AppError("الرقم السري او الاسم غير صحيح", 401));
     }
 
     // returing the token if the data is correct
@@ -48,7 +49,11 @@ export const signUp = catchAsync(
     if (check) {
       return next(new AppError("اسم المستخدم موجود بالفعل", 400));
     }
-    const user = await User.create({ name, password, confirmPassword, role });
+    if(password != confirmPassword){
+        return next(new AppError("الرقم السري غير متطابق" , 400))
+    }
+    let hashedPassword = await hashPassword(password);
+    const user = await User.create({ name, password:hashedPassword, role });
     // returing the token if the data is correct
     const token = generateToken({
       id: user._id,

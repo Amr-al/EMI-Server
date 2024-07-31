@@ -7,6 +7,7 @@ import xss from 'xss';
 import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorController";
 import userRoutes from './routes/userRoutes'
+import documentRoutes from './routes/documents'
 import { conect } from "./utils/dataBaseConnection";
 import morgan from 'morgan';
 const App = express();
@@ -33,6 +34,7 @@ xss('<script>alert("xss");</script>');
 
 // global routes
 App.use('/auth', userRoutes);
+App.use('/test', documentRoutes)
 
 App.all("*", (req: any, res: any, next: any) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server`,404))

@@ -22,18 +22,8 @@ const userModel = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "من فضلك ادخل الرقم السري"],
-      maxLength: 30,
+      maxLength: 150,
       select: false,
-    },
-    confirmPassword: {
-      type: String,
-      required: [true, "من فضلك أكد الرقم السري"],
-      validate: {
-        validator: function (this: User, el: string) {
-          return el == this.password;
-        },
-        message: "الرقم السري غير متطابق",
-      },
     },
   },
   {
