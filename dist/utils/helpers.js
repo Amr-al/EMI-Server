@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.correctPassword = exports.hashPassword = exports.generateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+// generating JWT for the passing data
 const generateToken = (data) => {
     const token = jsonwebtoken_1.default.sign(data, process.env.JWT_SECRET || "secret", {
         expiresIn: process.env.JWT_EXPIRES_IN,
@@ -22,11 +23,13 @@ const generateToken = (data) => {
     return token;
 };
 exports.generateToken = generateToken;
+// encrypt the password
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(password, 12);
     return hashedPassword;
 });
 exports.hashPassword = hashPassword;
+// checking if the entered password is correct
 const correctPassword = (candidatePassword, userPassword) => __awaiter(void 0, void 0, void 0, function* () {
     return yield bcrypt_1.default.compare(candidatePassword, userPassword);
 });

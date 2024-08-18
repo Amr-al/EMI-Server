@@ -48,7 +48,8 @@ const handleExpiredTokenError = (): AppError =>
 
 const handleTokenError = () =>
   new AppError("Invalid token, please login!", 401);
-const sendErrorDev = (err: any, res: Response): void => {
+
+const sendErrorDev = (err: ErrorResponse, res: Response): void => {
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -57,7 +58,7 @@ const sendErrorDev = (err: any, res: Response): void => {
   });
 };
 
-const sendErrorProd = (err: any, res: Response): void => {
+const sendErrorProd = (err: ErrorResponse, res: Response): void => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,

@@ -10,21 +10,22 @@ const userModel = new mongoose.Schema(
     name: {
       type: String,
       maxLength: 50,
-      minLength:3,
-      required:true,
-      unique:true
+      minLength: 3,
+      required: true,
+      unique: true
     },
     role: {
       type: String,
-      enum: ["admin", "montadaben", "info", "planing", "retired", "affairs"],
-      required:true
+      enum: ["admin", "chief", "montChief", "infoCheif","planChief", "montadaben", "info", "planing", "retired", "affairs", "sec"],
+      required: true
     },
     password: {
       type: String,
       required: [true, "من فضلك ادخل الرقم السري"],
-      maxLength: 150,
+      maxLength: 200,
       select: false,
     },
+    image:String
   },
   {
     timestamps: true,

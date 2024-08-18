@@ -14,24 +14,14 @@ const userModel = new mongoose_1.default.Schema({
     },
     role: {
         type: String,
-        enum: ["admin", "montadaben", "info", "planing", "retired", "affairs"],
+        enum: ["admin", "chief", "montChief", "infoCheif", "planChief", "montadaben", "info", "planing", "retired", "affairs", "sec"],
         required: true
     },
     password: {
         type: String,
         required: [true, "من فضلك ادخل الرقم السري"],
-        maxLength: 30,
+        maxLength: 200,
         select: false,
-    },
-    confirmPassword: {
-        type: String,
-        required: [true, "من فضلك أكد الرقم السري"],
-        validate: {
-            validator: function (el) {
-                return el == this.password;
-            },
-            message: "الرقم السري غير متطابق",
-        },
     },
 }, {
     timestamps: true,
