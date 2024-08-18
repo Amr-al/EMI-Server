@@ -6,7 +6,7 @@ import upload from "../utils/multer";
 const router = Router();
 
 router.post('/signin', signIn);
-router.post('/signup', isAdmin, upload.single('file'), signUp);
+router.post('/signup', upload.single('file'), signUp);
 router.get('/getAll', isAdmin, getAllUsers);
 router.patch('/update', updateProfile);
 router.get('/:id', getById);
